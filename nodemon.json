@@ -1,0 +1,9 @@
+{
+  "env": {
+    "MONGO_CONNECT": "mongodb://127.0.0.1:27017/restApi",
+    "JWT_KEY": "manh",
+    "CLOUDINARY_NAME": "dsidvvlfk",
+    "CLOUDINARY_KEY": "646837287857593",
+    "CLOUDINARY_SECRET": "3dDYajtuB5GZ_XKoX439oAV0p14"
+  }
+}
