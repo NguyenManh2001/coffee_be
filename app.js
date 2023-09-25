@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const app = express();
+const cors = require("cors");
 const productRouter = require("./api/routers/product");
 const ordersRouter = require("./api/routers/orders");
 const usersRouter = require("./api/routers/user");
@@ -17,6 +18,7 @@ app.use(morgan("dev"));
 app.use(bodyParse.urlencoded({ extended: false }));
 app.use(bodyParse.json());
 app.use(express.json());
+app.use(cors());
 route(app);
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://coffee-fe.vercel.app");
