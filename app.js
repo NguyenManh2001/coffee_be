@@ -19,7 +19,7 @@ app.use(bodyParse.json());
 app.use(express.json());
 route(app);
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "https://coffee-fe.vercel.app");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin,X-Requested-Width,Content-Type,Authorization"
