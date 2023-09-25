@@ -12,7 +12,7 @@ const Schema = mongoose.Schema;
 //   timestamps:true,
 // }
 //  );
-const menuCoffee = new Schema(
+const product = new Schema(
   {
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true },
@@ -23,12 +23,12 @@ const menuCoffee = new Schema(
     type: { type: String, required: true },
   },
   {
-    collection: "menuCoffee",
+    collection: "product",
     timestamps: true,
   }
 );
-menuCoffee.plugin(mongoosePaginate);
+product.plugin(mongoosePaginate);
 // const MenusModel = mongoose.model('menus', menus);
-const MenuCoffeeModel = mongoose.model("menuCoffee", menuCoffee);
+const ProductModel = mongoose.model("product", product);
 
-module.exports = { MenuCoffeeModel };
+module.exports = { ProductModel };

@@ -1,4 +1,6 @@
 const { CustomerModel } = require("../modules/customer");
+const cloudinary = require("cloudinary").v2;
+const { default: mongoose } = require("mongoose");
 const jwt = require("jsonwebtoken");
 
 class customerController {
@@ -10,6 +12,7 @@ class customerController {
     const number = req.body.number;
 
     const customersModel = new CustomerModel({
+      _id: new mongoose.Types.ObjectId(),
       name: name,
       gender: gender,
       address: address,

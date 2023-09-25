@@ -1,11 +1,11 @@
-const { MenuCoffeeModel } = require("../modules/product");
+const { ProductModel } = require("../modules/product");
 // const jwt = require('jsonwebtoken');
 const cloudinary = require("cloudinary").v2;
 const { default: mongoose } = require("mongoose");
-class MenuCoffeeController {
+class ProductController {
   async listProduct(req, res, next) {
     const page = req.body.page || 1;
-    const limit = 7;
+    const limit = req.body.limit || 5;
     const search = req.body.search || "";
     const type = req.body.type || "";
     const query = {};
@@ -15,7 +15,7 @@ class MenuCoffeeController {
     if (type) {
       query.type = type;
     }
-    MenuCoffeeModel.paginate(query, { page, limit })
+    ProductModel.paginate(query, { page, limit })
       .then((results) => {
         // const respone = {
         //   count: results?.docs?.length,
@@ -50,7 +50,7 @@ class MenuCoffeeController {
     const price = req.body.price;
     const image = req.file;
     console.log(image);
-    const menu = new MenuCoffeeModel({
+    const menu = new ProductModel({
       _id: new mongoose.Types.ObjectId(),
       name: name,
       price: price,
@@ -85,7 +85,7 @@ class MenuCoffeeController {
     };
 
     try {
-      const result = await MenuCoffeeModel.findByIdAndUpdate(
+      const result = await ProductModel.findByIdAndUpdate(
         productId,
         { $set: updatedFields },
         { new: true } // Để trả về bản ghi đã cập nhật
@@ -111,7 +111,7 @@ class MenuCoffeeController {
   async deleteProduct(req, res, next) {
     const id = req.params.productId;
     console.log(id);
-    MenuCoffeeModel.deleteOne({ _id: id })
+    ProductModel.deleteOne({ _id: id })
       .exec()
       .then((doc) => {
         res.status(200).json({
@@ -126,4 +126,4 @@ class MenuCoffeeController {
   }
 }
 
-module.exports = new MenuCoffeeController();
+module.exports = new ProductController();

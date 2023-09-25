@@ -58,15 +58,15 @@ class LoginController {
     const page = req.body.page || 1;
     const limit = req.body.select || 10;
     const search = req.body.search || "";
-    const email = req.body.email || "";
+    // const email = req.body.email || "";
     try {
       const query = {};
       if (search) {
-        query.name = { $regex: new RegExp(search, "i") };
+        query.email = { $regex: new RegExp(search, "i") };
       }
-      if (email) {
-        query.email = email;
-      }
+      // if (email) {
+      //   query.email = email;
+      // }
       const data = await AccountModel.paginate(query, { page, limit });
       // const data = await CustomerModel.find({});
       if (data) {
@@ -78,6 +78,37 @@ class LoginController {
       console.log(err);
       res.status(500).send("Lỗi server");
     }
+  }
+
+  async updateAcount(req, res, next) {
+    const id = req.params.id;
+    AccountModel.updateOne({ _id: id }, { $set: req.body })
+      .exec()
+      .then((result) => {
+        res.status(200).json({
+          message: "Customer updated",
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: err,
+        });
+      });
+  }
+
+  async deleteAccount(req, res, next) {
+    try {
+      const data = await AccountModel.deleteOne({ _id: req.params.id });
+      if (data) {
+        res.json("delete thanh cong");
+      } else {
+        console.log("Không có dữ liệu");
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Lỗi server");
+    }
+    next();
   }
 }
 
