@@ -4,10 +4,10 @@ const cloudinary = require("cloudinary").v2;
 const { default: mongoose } = require("mongoose");
 class ProductController {
   async listProduct(req, res, next) {
-    const page = req.params.page || 1;
-    const limit = req.params.limit || 5;
-    const search = req.params.search || "";
-    const type = req.params.type || "";
+    const page = req.body.page || 1;
+    const limit = req.body.limit || 5;
+    const search = req.body.search || "";
+    const type = req.body.type || "";
     const query = {};
     if (search) {
       query.name = { $regex: new RegExp(search, "i") };
