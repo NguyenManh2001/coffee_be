@@ -1,6 +1,6 @@
 {
   "env": {
-    "MONGO_CONNECT": "mongodb://127.0.0.1:27017/restApi",
+    "MONGO_CONNECT": "mongodb+srv://Coffee_BE:Bav75768@cluster0.wtld0s5.mongodb.net/?retryWrites=true&w=majority",
     "JWT_KEY": "manh",
     "CLOUDINARY_NAME": "dsidvvlfk",
     "CLOUDINARY_KEY": "646837287857593",
