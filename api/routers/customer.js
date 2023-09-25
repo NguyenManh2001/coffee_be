@@ -2,14 +2,14 @@ const express = require("express");
 const router = express.Router();
 // const fileUploader = require("../app/controllers/upload");
 const {
-  CreateCustomer,
   listCustomer,
   deleteCustomer,
   updateCustomer,
+  addCustomer,
 } = require("../controller/CustomerController");
 
-router.get("/listCustomer", listCustomer);
-router.post("/addCustomer", CreateCustomer);
+router.post("/listCustomer", listCustomer);
+router.post("/addCustomer", addCustomer);
 router.put("/updateCustomer/:id", updateCustomer);
 router.delete("/deleteCustomer/:id", deleteCustomer);
 // router.post('/ListMenu', Menu);

@@ -12,7 +12,7 @@ const {
 } = require("../controller/NewsController");
 
 router.post("/addNews", fileUploader.single("image"), addNews);
-router.get("/listNews", listNews);
+router.post("/listNews", listNews);
 router.put("/editNews/:id", fileUploader.single("image"), updateNews);
 // router.post("/editMenu/:id2/:id1", editMenu);
 router.delete("/deleteNews/:newsId", deleteNews);

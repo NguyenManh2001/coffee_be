@@ -2,8 +2,6 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const cors = require("cors");
-const productRouter = require("./api/routers/product");
-const ordersRouter = require("./api/routers/orders");
 const usersRouter = require("./api/routers/user");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
@@ -35,8 +33,8 @@ app.use((req, res, next) => {
 mongoose.Promise = global.Promise;
 app.use("/uploads", express.static("uploads"));
 // app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use("/product", productRouter);
-app.use("/orders", ordersRouter);
+// app.use("/product", productRouter);
+// app.use("/orders", ordersRouter);
 app.use("/users", usersRouter);
 app.use((req, res, next) => {
   const error = new Error("Not found");

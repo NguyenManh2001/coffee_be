@@ -2,11 +2,13 @@ const product = require("./product");
 const customer = require("./customer");
 const account = require("./account");
 const news = require("./news");
+const orders = require("./orders");
 function route(app) {
-  app.use("/menuList", product);
+  app.use("/product", product);
   app.use("/customer", customer);
   app.use("/account", account);
   app.use("/news", news);
+  app.use("/orders", orders);
   app.use((req, res, next) => {
     const error = new Error("Not found");
     error.status = 404;

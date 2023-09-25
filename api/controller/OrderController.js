@@ -1,28 +1,38 @@
-const { CustomerModel } = require("../modules/customer");
+const { OrderModel } = require("../modules/orders");
+const { ProductModel } = require("../modules/product");
 const cloudinary = require("cloudinary").v2;
 const { default: mongoose } = require("mongoose");
 const jwt = require("jsonwebtoken");
 
-class customerController {
-  async addCustomer(req, res, next) {
-    const name = req.body.name;
-    const gender = req.body.gender;
-    const address = req.body.address;
-    const email = req.body.email;
-    const number = req.body.number;
+class OrderController {
+  async addOrder(req, res, next) {
+    const customerId = req.body.customerId;
+    const productId = req.body.productId;
+    const quantity = req.body.quantity;
+    const size = req.body.size;
+    const total = req.body.total;
+    const isPaid = req.body.isPaid;
 
-    const customersModel = new CustomerModel({
+    const ordersModel = new OrderModel({
       _id: new mongoose.Types.ObjectId(),
-      name: name,
-      gender: gender,
-      address: address,
-      email: email,
-      number: number,
+      customerId: customerId,
+      items: [
+        {
+          productId: productId,
+          quantity: quantity,
+          size: size,
+        },
+      ],
+      total: total,
+      isPaid: isPaid,
     });
     try {
-      const data = await customersModel.save();
+      const data = await ordersModel.save();
       if (data) {
-        res.json("Thêm thông tin thành công!");
+        res.status(201).json({
+          message: "Created order successfullly",
+          menu: data,
+        });
       } else {
         res.json("that bai");
       }
@@ -31,7 +41,7 @@ class customerController {
     }
   }
 
-  async listCustomer(req, res, next) {
+  async listOrder(req, res, next) {
     const page = req.body.page || 1;
     const limit = req.body.select || 10;
     const search = req.body.search || "";
@@ -44,8 +54,13 @@ class customerController {
       if (email) {
         query.email = email;
       }
-      const data = await CustomerModel.paginate(query, { page, limit });
-      // const data = await CustomerModel.find({});
+      const options = {
+        page: page,
+        limit: limit,
+        populate: ["customerId", "items.productId"], // Populate customerId and items.productId
+      };
+      const data = await OrderModel.paginate(query, options);
+      // const data = await OrderModel.find({});
       if (data) {
         res.send(data);
       } else {
@@ -57,21 +72,21 @@ class customerController {
     }
   }
 
-  async updateCustomer(req, res, next) {
-    const id = req.params.id;
-    CustomerModel.updateOne({ _id: id }, { $set: req.body })
-      .exec()
-      .then((result) => {
-        res.status(200).json({
-          message: "Customer updated",
-        });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          error: err,
-        });
-      });
-  }
+  // async updateOrder(req, res, next) {
+  //   const id = req.params.id;
+  //   OrderModel.updateOne({ _id: id }, { $set: req.body })
+  //     .exec()
+  //     .then((result) => {
+  //       res.status(200).json({
+  //         message: "Customer updated",
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       res.status(500).json({
+  //         error: err,
+  //       });
+  //     });
+  // }
   //   async EditCar(req,res,next){
   //     try {
   //       const data = await CreatecarModel.findOne({_id:req.params.id});
@@ -101,9 +116,9 @@ class customerController {
   //     next();
   //   }
 
-  async deleteCustomer(req, res, next) {
+  async deleteOrder(req, res, next) {
     try {
-      const data = await CustomerModel.deleteOne({ _id: req.params.id });
+      const data = await OrderModel.deleteOne({ _id: req.params.id });
       if (data) {
         res.json("delete thanh cong");
       } else {
@@ -131,4 +146,4 @@ class customerController {
   //   }
 }
 
-module.exports = new customerController();
+module.exports = new OrderController();

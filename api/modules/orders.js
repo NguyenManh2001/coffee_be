@@ -5,13 +5,24 @@ const { default: mongoose } = require("mongoose");
 const ordersSchema = mongoose.Schema(
   {
     _id: mongoose.Schema.Types.ObjectId,
-    product: {
+    customerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "customer",
       required: true,
     },
-    quatity: { type: Number, default: 1 },
-    size: { type: String },
+    items: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "product",
+          required: true,
+        },
+        quantity: { type: Number, default: 1 },
+        size: String,
+      },
+    ],
+    total: Number,
+    isPaid: Boolean,
   },
   {
     collection: "ordersSchema",
@@ -19,4 +30,5 @@ const ordersSchema = mongoose.Schema(
   }
 );
 ordersSchema.plugin(mongoosePaginate);
-module.exports = mongoose.model("Orders", ordersSchema);
+const OrderModel = mongoose.model("Orders", ordersSchema);
+module.exports = { OrderModel };
