@@ -9,6 +9,9 @@ class OrderController {
     const customerId = req.body.customerId;
     const productId = req.body.productId;
     const quantity = req.body.quantity;
+    const name = req.body.name;
+    const link = req.body.link;
+    const price = req.body.price;
     const size = req.body.size;
     const total = req.body.total;
     const isPaid = req.body.isPaid;
@@ -19,6 +22,9 @@ class OrderController {
       items: [
         {
           productId: productId,
+          name: name,
+          price: price,
+          link: link,
           quantity: quantity,
           size: size,
         },
