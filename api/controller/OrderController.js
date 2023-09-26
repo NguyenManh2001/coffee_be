@@ -6,9 +6,8 @@ const jwt = require("jsonwebtoken");
 
 class OrderController {
   async addOrder(req, res, next) {
-    const customerId = req.body.customerId;
-    const productId = req.body.productId;
-    console.log(productId);
+    const customer = req.body.customerId;
+    const product = req.body.productId;
     // const quantity = req.body.quantity;
     // const name = req.body.name;
     // const link = req.body.link;
@@ -19,8 +18,8 @@ class OrderController {
 
     const ordersModel = new OrderModel({
       _id: new mongoose.Types.ObjectId(),
-      customerId: customerId,
-      productId: productId,
+      customer: customer,
+      product: product,
       // items: [
       //   {
       //     productId: productId,
@@ -65,7 +64,7 @@ class OrderController {
       const options = {
         page: page,
         limit: limit,
-        populate: ["customerId", "productId"], // Populate customerId and items.productId
+        populate: ["customer", "product"], // Populate customerId and items.productId
       };
       const data = await OrderModel.paginate(query, options);
       // const data = await OrderModel.find({});
