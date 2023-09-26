@@ -8,27 +8,29 @@ class OrderController {
   async addOrder(req, res, next) {
     const customerId = req.body.customerId;
     const productId = req.body.productId;
-    const quantity = req.body.quantity;
-    const name = req.body.name;
-    const link = req.body.link;
-    const price = req.body.price;
-    const size = req.body.size;
+    console.log(productId);
+    // const quantity = req.body.quantity;
+    // const name = req.body.name;
+    // const link = req.body.link;
+    // const price = req.body.price;
+    // const size = req.body.size;
     const total = req.body.total;
     const isPaid = req.body.isPaid;
 
     const ordersModel = new OrderModel({
       _id: new mongoose.Types.ObjectId(),
       customerId: customerId,
-      items: [
-        {
-          productId: productId,
-          name: name,
-          price: price,
-          link: link,
-          quantity: quantity,
-          size: size,
-        },
-      ],
+      productId: productId,
+      // items: [
+      //   {
+      //     productId: productId,
+      //     name: name,
+      //     price: price,
+      //     link: link,
+      //     quantity: quantity,
+      //     size: size,
+      //   },
+      // ],
       total: total,
       isPaid: isPaid,
     });
@@ -63,7 +65,7 @@ class OrderController {
       const options = {
         page: page,
         limit: limit,
-        populate: ["customerId", "items.productId"], // Populate customerId and items.productId
+        populate: ["customerId", "productId"], // Populate customerId and items.productId
       };
       const data = await OrderModel.paginate(query, options);
       // const data = await OrderModel.find({});
