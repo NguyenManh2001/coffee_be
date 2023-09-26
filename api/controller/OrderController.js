@@ -19,7 +19,7 @@ class OrderController {
     const ordersModel = new OrderModel({
       _id: new mongoose.Types.ObjectId(),
       customer: customer,
-      product: product,
+      products: product,
       // items: [
       //   {
       //     productId: productId,
@@ -33,6 +33,7 @@ class OrderController {
       total: total,
       isPaid: isPaid,
     });
+    console.log(ordersModel);
     try {
       const data = await ordersModel.save();
       if (data) {
@@ -64,7 +65,7 @@ class OrderController {
       const options = {
         page: page,
         limit: limit,
-        populate: ["customer", "product"], // Populate customerId and items.productId
+        populate: ["customer", "products.product"], // Populate customerId and items.productId
       };
       const data = await OrderModel.paginate(query, options);
       // const data = await OrderModel.find({});
@@ -135,7 +136,7 @@ class OrderController {
       console.log(err);
       res.status(500).send("Lỗi server");
     }
-    next();
+    // next();
   }
   //   async searchCar(req,res,next){
   //     try{
