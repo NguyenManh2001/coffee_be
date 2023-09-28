@@ -2,7 +2,6 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const cors = require("cors");
-const usersRouter = require("./api/routers/user");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bodyParse = require("body-parser");
@@ -35,7 +34,6 @@ app.use("/uploads", express.static("uploads"));
 // app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // app.use("/product", productRouter);
 // app.use("/orders", ordersRouter);
-app.use("/users", usersRouter);
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
