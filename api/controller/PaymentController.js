@@ -53,7 +53,8 @@ class PaymentController {
       vnp_Url + "?" + qs.stringify(vnp_Params, { encode: false });
 
     // Chuyển hướng người dùng đến URL thanh toán
-    res.redirect(vnpayPaymentURL);
+    // res.redirect(vnpayPaymentURL);
+    res.json({ vnpayPaymentURL });
   }
 }
 
