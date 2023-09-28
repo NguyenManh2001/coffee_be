@@ -22,7 +22,7 @@ class PaymentController {
       vnp_Amount: amount * 100, // Chuyển đổi sang đơn vị tiền tệ của VNPAY
       vnp_ReturnUrl: "http://localhost:4000/return", // URL để xử lý kết quả thanh toán
       vnp_IpAddr: req.ip,
-      vnp_CreateDate: new Date().toISOString(),
+      vnp_CreateDate: new Date(),
     };
 
     // Thêm mã ngân hàng nếu có
