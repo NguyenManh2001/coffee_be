@@ -1,8 +1,8 @@
 const CryptoJS = require("crypto-js");
 const qs = require("qs");
 const sortObject = require("sort-object");
-const dateFormat = require("date-format");
-// import dateFormat, { masks } from "dateformat"
+// const dateFormat = require("date-format");
+// const dateFormat = require("dateformat");
 class PaymentController {
   async createPayment(req, res, next) {
     // const ipAddr =
@@ -78,9 +78,20 @@ class PaymentController {
     // const date = new Date();
     // const createDate = new Date();
     // const orderId = Date.now().toString();
-    const date = new Date();
-    const createDate = dateFormat("yyyyMMddHHmmss", date);
-    const orderId = dateFormat("HHmmss", date);
+    // / Lấy ngày tháng hiện tại
+    const currentDate = new Date();
+
+    // Định dạng ngày tháng thành chuỗi yyyymmddHHMMss
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const hours = String(currentDate.getHours()).padStart(2, "0");
+    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+    const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+    const formattedDate = `${year}${month}${day}${hours}${minutes}${seconds}`;
+    // const createDate = dateFormat("yyyyMMddHHmmss", date);
+    // const orderId = dateFormat("HHmmss", date);
+    const orderId = `${hours}${minutes}${seconds}`;
     const amount = req.body.amount;
     const bankCode = req.body.bankCode;
 
@@ -104,7 +115,7 @@ class PaymentController {
     vnp_Params["vnp_Amount"] = amount * 100;
     vnp_Params["vnp_ReturnUrl"] = returnUrl;
     vnp_Params["vnp_IpAddr"] = ipAddr;
-    vnp_Params["vnp_CreateDate"] = createDate;
+    vnp_Params["vnp_CreateDate"] = formattedDate;
     if (bankCode !== null && bankCode !== "") {
       vnp_Params["vnp_BankCode"] = bankCode;
     }
