@@ -1,7 +1,8 @@
 const CryptoJS = require("crypto-js");
 const qs = require("qs");
-var sortObject = require("sort-object");
-// import dateFormat, { masks } from "dateformat";
+const sortObject = require("sort-object");
+const dateFormat = require("date-format");
+// import dateFormat, { masks } from "dateformat"
 class PaymentController {
   async createPayment(req, res, next) {
     // const ipAddr =
@@ -64,7 +65,7 @@ class PaymentController {
     // // res.redirect(vnpayPaymentURL);
     // res.json({ vnpayPaymentURL });
 
-    const ipAddr =
+    var ipAddr =
       req.headers["x-forwarded-for"] ||
       req.connection.remoteAddress ||
       req.socket.remoteAddress ||
@@ -73,15 +74,18 @@ class PaymentController {
     const vnp_TmnCode = process.env.YOUR_VNPAY_TMNCODE; // Thay thế bằng mã TMNCODE của bạn
     const vnp_HashSecret = process.env.YOUR_VNPAY_HASH_SECRET; // Thay thế bằng mã bí mật của bạn
     var vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; // URL thanh toán của VNPAY (sandbox)
-    const returnUrl = "http://localhost:3000/return";
+    const returnUrl = "https://coffee-fe.vercel.app/return";
 
     // const date = new Date();
-    const createDate = new Date();
-    const orderId = Date.now().toString();
+    // const createDate = new Date();
+    // const orderId = Date.now().toString();
+    const date = new Date();
+    const createDate = dateFormat("yyyyMMddHHmmss", date);
+    const orderId = dateFormat("HHmmss", date);
     const amount = req.body.amount;
     const bankCode = req.body.bankCode;
 
-    const orderInfo = req.body.orderDescription;
+    const orderInfo = encodeURIComponent(req.body.orderDescription);
     const orderType = req.body.orderType;
     const locale = req.body.language;
     if (locale === null || locale === "") {
