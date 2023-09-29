@@ -1,7 +1,6 @@
-const CryptoJS = require("crypto-js");
 const querystring = require("qs");
 const sortObject = require("sort-object");
-const crypto = require("crypto");
+const crypto = require("crypto-js");
 // const dateFormat = require("date-format");
 // const dateFormat = require("dateformat");
 class PaymentController {
@@ -74,7 +73,7 @@ class PaymentController {
     const vnp_TmnCode = process.env.YOUR_VNPAY_TMNCODE; // Thay thế bằng mã TMNCODE của bạn
     const vnp_HashSecret = process.env.YOUR_VNPAY_HASH_SECRET; // Thay thế bằng mã bí mật của bạn
     var vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; // URL thanh toán của VNPAY (sandbox)
-    const returnUrl = "http://localhost:3000/return";
+    const returnUrl = "http://localhost:3000/VnPayReturn";
 
     // const date = new Date();
     // const createDate = new Date();
@@ -96,38 +95,59 @@ class PaymentController {
     const amount = req.body.amount;
     const bankCode = req.body.bankCode;
 
-    const orderInfo = encodeURIComponent(req.body.orderDescription);
+    const orderInfo = req.body.orderDescription;
     const orderType = req.body.orderType;
     var locale = req.body.language;
     if (locale === null || locale === "") {
       locale = "vn";
     }
     const currCode = "VND";
-    var vnp_Params = {};
-    vnp_Params["vnp_Version"] = "2.1.0";
-    vnp_Params["vnp_Command"] = "pay";
-    vnp_Params["vnp_TmnCode"] = vnp_TmnCode;
-    // vnp_Params['vnp_Merchant'] = ''
-    vnp_Params["vnp_Locale"] = locale;
-    vnp_Params["vnp_CurrCode"] = currCode;
-    vnp_Params["vnp_TxnRef"] = orderId;
-    vnp_Params["vnp_OrderInfo"] = orderInfo;
-    vnp_Params["vnp_OrderType"] = orderType;
-    vnp_Params["vnp_Amount"] = amount * 100;
-    vnp_Params["vnp_ReturnUrl"] = encodeURIComponent(returnUrl);
-    vnp_Params["vnp_IpAddr"] = ipAddr;
-    vnp_Params["vnp_CreateDate"] = formattedDate;
-    if (bankCode !== null && bankCode !== "") {
-      vnp_Params["vnp_BankCode"] = bankCode;
+    const vnp_Params = {
+      vnp_Amount: amount * 100,
+      vnp_Command: "pay",
+      vnp_CreateDate: formattedDate,
+      vnp_CurrCode: currCode,
+      vnp_Locale: locale,
+      vnp_OrderInfo: encodeURIComponent(orderInfo),
+      vnp_IpAddr: ipAddr,
+      vnp_OrderType: orderType,
+      vnp_ReturnUrl: encodeURIComponent(returnUrl),
+      vnp_TmnCode: vnp_TmnCode,
+      vnp_TxnRef: orderId,
+      vnp_Version: "2.1.0",
+      // vnp_Params['vnp_Merchant'] : ''
+    };
+    // Thêm mã ngân hàng nếu có
+    if (bankCode) {
+      vnp_Params.vnp_BankCode = bankCode;
     }
 
-    vnp_Params = sortObject(vnp_Params);
-    console.log(vnp_HashSecret);
-    var signData = querystring.stringify(vnp_Params, { encode: false });
-    const hmac = CryptoJS.HmacSHA512(signData, vnp_HashSecret);
-    const signed = CryptoJS.enc.Hex.stringify(hmac);
+    // Sắp xếp các tham số theo thứ tự chữ cái
+    const sortedParams = Object.keys(vnp_Params)
+      .sort()
+      .reduce((obj, key) => {
+        obj[key] = vnp_Params[key];
+        return obj;
+      }, {});
+
+    // Tạo chuỗi dữ liệu cần ký
+    const signData = Object.keys(sortedParams)
+      .map((key) => `${key}=${sortedParams[key]}`)
+      .join("&");
+
+    console.log(signData);
+
+    // Mã bí mật của bạn
+    // const secretKey = 'YourSecretKey';
+
+    // Tạo mã băm SHA-256 sử dụng secretKey
+    const hash = crypto.SHA256(signData, vnp_HashSecret);
+
+    // Chuyển đổi kết quả thành chuỗi hex
+    const signed = hash.toString(crypto.enc.Hex);
     console.log(signed);
-    vnp_Params["vnp_SecureHash"] = signed;
+
+    vnp_Params.vnp_SecureHash = signed;
     vnp_Url += "?" + querystring.stringify(vnp_Params, { encode: false });
 
     res.json({ vnp_Url });
