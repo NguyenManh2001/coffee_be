@@ -65,11 +65,10 @@ class PaymentController {
     // // res.redirect(vnpayPaymentURL);
     // res.json({ vnpayPaymentURL });
 
-    var ipAddr =
-      req.headers["x-forwarded-for"] ||
-      // req.connection.remoteAddress ||
-      req.socket.remoteAddress;
-    // req.connection.socket?.remoteAddress;
+    const forwardedIps = req.headers["x-forwarded-for"];
+    const ipAddr = forwardedIps
+      ? forwardedIps.split(",")[0]
+      : req.connection.remoteAddress;
 
     const vnp_TmnCode = process.env.YOUR_VNPAY_TMNCODE; // Thay thế bằng mã TMNCODE của bạn
     const vnp_HashSecret = process.env.YOUR_VNPAY_HASH_SECRET; // Thay thế bằng mã bí mật của bạn
