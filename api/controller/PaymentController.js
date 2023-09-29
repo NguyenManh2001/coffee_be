@@ -1,6 +1,7 @@
 const CryptoJS = require("crypto-js");
-const qs = require("qs");
+const querystring = require("qs");
 const sortObject = require("sort-object");
+const crypto = require("crypto");
 // const dateFormat = require("date-format");
 // const dateFormat = require("dateformat");
 class PaymentController {
@@ -67,7 +68,7 @@ class PaymentController {
 
     const forwardedIps = req.headers["x-forwarded-for"];
     const ipAddr = forwardedIps
-      ? forwardedIps.split(",")[0]
+      ? forwardedIps.split(",")[1]
       : req.connection.remoteAddress;
 
     const vnp_TmnCode = process.env.YOUR_VNPAY_TMNCODE; // Thay thế bằng mã TMNCODE của bạn
@@ -97,7 +98,7 @@ class PaymentController {
 
     const orderInfo = encodeURIComponent(req.body.orderDescription);
     const orderType = req.body.orderType;
-    const locale = req.body.language;
+    var locale = req.body.language;
     if (locale === null || locale === "") {
       locale = "vn";
     }
@@ -113,7 +114,7 @@ class PaymentController {
     vnp_Params["vnp_OrderInfo"] = orderInfo;
     vnp_Params["vnp_OrderType"] = orderType;
     vnp_Params["vnp_Amount"] = amount * 100;
-    vnp_Params["vnp_ReturnUrl"] = returnUrl;
+    vnp_Params["vnp_ReturnUrl"] = encodeURIComponent(returnUrl);
     vnp_Params["vnp_IpAddr"] = ipAddr;
     vnp_Params["vnp_CreateDate"] = formattedDate;
     if (bankCode !== null && bankCode !== "") {
@@ -121,12 +122,11 @@ class PaymentController {
     }
 
     vnp_Params = sortObject(vnp_Params);
-
-    const querystring = require("qs");
-    const signData = querystring.stringify(vnp_Params, { encode: false });
-    const crypto = require("crypto");
-    const hmac = crypto.createHmac("sha512", vnp_HashSecret);
-    const signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
+    console.log(vnp_HashSecret);
+    var signData = querystring.stringify(vnp_Params, { encode: false });
+    const hmac = CryptoJS.HmacSHA512(signData, vnp_HashSecret);
+    const signed = CryptoJS.enc.Hex.stringify(hmac);
+    console.log(signed);
     vnp_Params["vnp_SecureHash"] = signed;
     vnp_Url += "?" + querystring.stringify(vnp_Params, { encode: false });
 
