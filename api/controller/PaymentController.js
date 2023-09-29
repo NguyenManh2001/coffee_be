@@ -74,7 +74,7 @@ class PaymentController {
     const vnp_TmnCode = process.env.YOUR_VNPAY_TMNCODE; // Thay thế bằng mã TMNCODE của bạn
     const vnp_HashSecret = process.env.YOUR_VNPAY_HASH_SECRET; // Thay thế bằng mã bí mật của bạn
     var vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; // URL thanh toán của VNPAY (sandbox)
-    const returnUrl = "https://coffee-fe.vercel.app/return";
+    const returnUrl = "http://localhost:3000/return";
 
     // const date = new Date();
     // const createDate = new Date();
