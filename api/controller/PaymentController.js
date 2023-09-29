@@ -1,5 +1,7 @@
 const CryptoJS = require("crypto-js");
 const qs = require("qs");
+var sortObject = require("sort-object");
+// import dateFormat, { masks } from "dateformat";
 class PaymentController {
   async createPayment(req, res, next) {
     // const ipAddr =
@@ -68,18 +70,14 @@ class PaymentController {
       req.socket.remoteAddress ||
       req.connection.socket.remoteAddress;
 
-    const config = require("config");
-    const dateFormat = require("dateformat");
-
     const vnp_TmnCode = process.env.YOUR_VNPAY_TMNCODE; // Thay thế bằng mã TMNCODE của bạn
     const vnp_HashSecret = process.env.YOUR_VNPAY_HASH_SECRET; // Thay thế bằng mã bí mật của bạn
-    const vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; // URL thanh toán của VNPAY (sandbox)
+    var vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; // URL thanh toán của VNPAY (sandbox)
     const returnUrl = "http://localhost:3000/return";
 
-    const date = new Date();
-
-    const createDate = dateFormat(date, "yyyymmddHHmmss");
-    const orderId = dateFormat(date, "HHmmss");
+    // const date = new Date();
+    const createDate = new Date();
+    const orderId = Date.now().toString();
     const amount = req.body.amount;
     const bankCode = req.body.bankCode;
 
@@ -90,7 +88,7 @@ class PaymentController {
       locale = "vn";
     }
     const currCode = "VND";
-    const vnp_Params = {};
+    var vnp_Params = {};
     vnp_Params["vnp_Version"] = "2.1.0";
     vnp_Params["vnp_Command"] = "pay";
     vnp_Params["vnp_TmnCode"] = vnp_TmnCode;
@@ -118,7 +116,7 @@ class PaymentController {
     vnp_Params["vnp_SecureHash"] = signed;
     vnp_Url += "?" + querystring.stringify(vnp_Params, { encode: false });
 
-    res.redirect(vnp_Url);
+    res.json({ vnp_Url });
   }
 }
 
