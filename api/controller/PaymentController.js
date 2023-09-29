@@ -66,9 +66,9 @@ class PaymentController {
     // res.json({ vnpayPaymentURL });
 
     var ipAddr =
-      // req.headers["x-forwarded-for"] ||
-      req.connection.remoteAddress;
-    // req.socket.remoteAddress ||
+      req.headers["x-forwarded-for"] ||
+      // req.connection.remoteAddress ||
+      req.socket.remoteAddress;
     // req.connection.socket?.remoteAddress;
 
     const vnp_TmnCode = process.env.YOUR_VNPAY_TMNCODE; // Thay thế bằng mã TMNCODE của bạn
