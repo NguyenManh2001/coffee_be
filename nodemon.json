@@ -6,6 +6,8 @@
     "CLOUDINARY_KEY": "646837287857593",
     "CLOUDINARY_SECRET": "3dDYajtuB5GZ_XKoX439oAV0p14",
     "YOUR_VNPAY_TMNCODE": "Q2NDECJB",
-    "YOUR_VNPAY_HASH_SECRET": "KUQRIIHGZZDDNEZIGNPSHEDDFRMVGGIA"
+    "YOUR_VNPAY_HASH_SECRET": "KUQRIIHGZZDDNEZIGNPSHEDDFRMVGGIA",
+    "VNP_URL": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
+    "vnp_ReturnUrl":"http://localhost:3000/order/vnpay_return"
   }
 }
