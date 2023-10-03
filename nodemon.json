@@ -9,6 +9,6 @@
     "YOUR_VNPAY_HASH_SECRET": "KUQRIIHGZZDDNEZIGNPSHEDDFRMVGGIA",
     "VNP_URL": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
     "vnp_Api":"https://sandbox.vnpayment.vn/merchant_webapi/api/transaction",
-    "vnp_ReturnUrl":"https://coffee-fe.vercel.app/order/VnPayReturn"
+    "vnp_ReturnUrl":"https://coffee-bliss.vercel.app/order/VnPayReturn"
   }
 }

@@ -80,8 +80,8 @@ class PaymentController {
     let secureHash = vnp_Params["vnp_SecureHash"];
     console.log(vnp_Params);
 
-    // delete vnp_Params["vnp_SecureHash"];
-    // delete vnp_Params["vnp_SecureHashType"];
+    delete vnp_Params["vnp_SecureHash"];
+    delete vnp_Params["vnp_SecureHashType"];
 
     vnp_Params = sortObject(vnp_Params);
     function sortObject(obj) {
