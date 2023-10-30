@@ -8,7 +8,7 @@ const {
   addCustomer,
 } = require("../controller/CustomerController");
 
-router.get("/listCustomer", listCustomer);
+router.post("/listCustomer", listCustomer);
 router.post("/addCustomer", addCustomer);
 router.put("/updateCustomer/:id", updateCustomer);
 router.delete("/deleteCustomer/:id", deleteCustomer);
