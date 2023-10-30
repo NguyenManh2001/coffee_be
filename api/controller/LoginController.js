@@ -36,7 +36,7 @@ class LoginController {
                   }
                 );
                 return res.status(200).json({
-                  message: "Auth successful",
+                  message: "Đăng nhập thành công",
                   token: token,
                 });
               }
@@ -86,7 +86,7 @@ class LoginController {
       .exec()
       .then((result) => {
         res.status(200).json({
-          message: "Customer updated",
+          message: "Cập nhật tài khoản thành công",
         });
       })
       .catch((err) => {
@@ -100,7 +100,7 @@ class LoginController {
     try {
       const data = await AccountModel.deleteOne({ _id: req.params.id });
       if (data) {
-        res.json("delete thanh cong");
+        res.json("Xóa tài khoản thành công");
       } else {
         console.log("Không có dữ liệu");
       }

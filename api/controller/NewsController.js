@@ -61,7 +61,7 @@ class NewsController {
       .save()
       .then((result) => {
         res.status(201).json({
-          message: "Created news successfullly",
+          message: "Thêm tin tức thành công",
           menu: result,
         });
       })
@@ -93,7 +93,7 @@ class NewsController {
 
       if (result) {
         res.status(200).json({
-          message: "News updated",
+          message: "Cập nhật tin tức thành công",
         });
       } else {
         res.status(404).json({
@@ -115,7 +115,7 @@ class NewsController {
       .exec()
       .then((doc) => {
         res.status(200).json({
-          message: "News deleted",
+          message: "Xóa tin tức thành công",
         });
       })
       .catch((err) => {

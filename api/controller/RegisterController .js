@@ -7,7 +7,7 @@ class RegisterController {
   Register(req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
-    const role = req.body.role;
+    const role = req.body.role || 0;
     AccountModel.find({ email: email }).then((data) => {
       if (data.length > 0) {
         return res.status(409).json({
@@ -30,7 +30,7 @@ class RegisterController {
               .save()
               .then((result) => {
                 res.status(200).json({
-                  message: "Create accouct successfully",
+                  message: "Đăng ký thành công",
                   result: result,
                 });
               })

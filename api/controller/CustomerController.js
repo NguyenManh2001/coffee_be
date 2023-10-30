@@ -63,7 +63,7 @@ class customerController {
       .exec()
       .then((result) => {
         res.status(200).json({
-          message: "Customer updated",
+          message: "Cập nhật thông tin khách hàng thành công",
         });
       })
       .catch((err) => {
@@ -105,7 +105,7 @@ class customerController {
     try {
       const data = await CustomerModel.deleteOne({ _id: req.params.id });
       if (data) {
-        res.json("delete thanh cong");
+        res.json("Xóa thông tin khách hàng thành công");
       } else {
         console.log("Không có dữ liệu");
       }

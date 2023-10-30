@@ -61,7 +61,7 @@ class ProductController {
       .save()
       .then((result) => {
         res.status(201).json({
-          message: "Created product successfullly",
+          message: "Thêm sản phẩm thành công",
           menu: result,
         });
       })
@@ -93,7 +93,7 @@ class ProductController {
 
       if (result) {
         res.status(200).json({
-          message: "Product updated",
+          message: "Cập nhật sản phẩm thành công",
         });
       } else {
         res.status(404).json({
@@ -115,7 +115,7 @@ class ProductController {
       .exec()
       .then((doc) => {
         res.status(200).json({
-          message: "Product deleted",
+          message: "Xóa sản phẩm thành công",
         });
       })
       .catch((err) => {

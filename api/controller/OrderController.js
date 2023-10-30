@@ -38,7 +38,7 @@ class OrderController {
       const data = await ordersModel.save();
       if (data) {
         res.status(201).json({
-          message: "Created order successfullly",
+          message: "Thêm đơn hàng thành công",
           menu: data,
         });
       } else {
@@ -128,7 +128,7 @@ class OrderController {
     try {
       const data = await OrderModel.deleteOne({ _id: req.params.id });
       if (data) {
-        res.json("delete thanh cong");
+        res.json("Xóa đơn hàng thành công");
       } else {
         console.log("Không có dữ liệu");
       }
