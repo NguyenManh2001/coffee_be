@@ -5,7 +5,7 @@ const { default: mongoose } = require("mongoose");
 class ProductController {
   async listProduct(req, res, next) {
     const page = req.body.page || 1;
-    const limit = req.body.limit || 5;
+    const limit = req.body.limit || 7;
     const search = req.body.search || "";
     const type = req.body.type || "";
     const query = {};
