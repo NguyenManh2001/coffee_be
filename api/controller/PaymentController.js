@@ -71,7 +71,19 @@ class PaymentController {
           "+"
         );
       }
-      return sorted;
+
+      // Tạo chuỗi query URL bằng cách kết hợp các cặp key-value đã sắp xếp
+      let queryStr = "";
+      for (key in sorted) {
+        if (sorted.hasOwnProperty(key)) {
+          queryStr += `${key}=${sorted[key]}&`;
+        }
+      }
+
+      // Loại bỏ dấu & cuối cùng nếu cần
+      queryStr = queryStr.slice(0, -1);
+
+      return queryStr;
     }
     let signData = querystring.stringify(vnp_Params, { encode: false });
     let hmac = crypto.createHmac("sha512", secretKey);
