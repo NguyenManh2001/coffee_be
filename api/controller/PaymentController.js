@@ -41,8 +41,8 @@ class PaymentController {
     vnp_Params["vnp_TxnRef"] = orderId;
     vnp_Params[
       "vnp_OrderInfo"
-    ] = `Thanh toan cho ma GD:${orderId}, customerId:${customerId}, productId:${productId.join(
-      ", "
+    ] = `Thanh toan cho ma GD:${orderId}, customerId:${customerId}, productId:${encodeURIComponent(
+      JSON.stringify(productId)
     )}`;
     vnp_Params["vnp_OrderType"] = "other";
     vnp_Params["vnp_Amount"] = amount * 100;
