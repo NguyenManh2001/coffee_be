@@ -41,7 +41,7 @@ class PaymentController {
     vnp_Params["vnp_OrderInfo"] = JSON.stringify({
       orderId: orderId,
       customerId: customerId,
-      productId: [productId],
+      productId: productId,
     });
 
     vnp_Params["vnp_OrderType"] = "other";
