@@ -25,13 +25,7 @@ class PaymentController {
     let bankCode = req.body.bankCode;
     let customerId = req.body.customerId;
     let productId = req.body.productId;
-    let products = productId.map((product) => {
-      return {
-        product: product.product,
-        quantity: product.quantity,
-        size: product.size,
-      };
-    });
+
     let locale = req.body.language;
     if (locale === null || locale === "") {
       locale = "vn";
@@ -48,7 +42,7 @@ class PaymentController {
       JSON.stringify({
         orderId: orderId,
         customerId: customerId,
-        productId: products,
+        productId: productId,
       })
     );
     vnp_Params["vnp_OrderType"] = "other";
