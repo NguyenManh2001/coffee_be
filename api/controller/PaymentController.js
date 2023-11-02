@@ -19,14 +19,19 @@ class PaymentController {
     let tmnCode = process.env.YOUR_VNPAY_TMNCODE;
     let secretKey = process.env.YOUR_VNPAY_HASH_SECRET;
     let vnpUrl = process.env.VNP_URL;
-    console.log(vnpUrl);
     let returnUrl = process.env.vnp_ReturnUrl;
     let orderId = moment(date).format("DDHHmmss");
     let amount = req.body.amount;
     let bankCode = req.body.bankCode;
     let customerId = req.body.customerId;
     let productId = req.body.productId;
-
+    let products = productId.map((product) => {
+      return {
+        product: product.product,
+        quantity: product.quantity,
+        size: product.size,
+      };
+    });
     let locale = req.body.language;
     if (locale === null || locale === "") {
       locale = "vn";
@@ -43,7 +48,7 @@ class PaymentController {
       JSON.stringify({
         orderId: orderId,
         customerId: customerId,
-        productId: productId,
+        productId: products,
       })
     );
     vnp_Params["vnp_OrderType"] = "other";
