@@ -38,13 +38,12 @@ class PaymentController {
     vnp_Params["vnp_Locale"] = locale;
     vnp_Params["vnp_CurrCode"] = currCode;
     vnp_Params["vnp_TxnRef"] = orderId;
-    vnp_Params["vnp_OrderInfo"] = encodeURIComponent(
-      JSON.stringify({
-        orderId: orderId,
-        customerId: customerId,
-        productId: productId,
-      })
-    );
+    vnp_Params["vnp_OrderInfo"] = JSON.stringify({
+      orderId: orderId,
+      customerId: customerId,
+      productId: productId,
+    });
+
     vnp_Params["vnp_OrderType"] = "other";
     vnp_Params["vnp_Amount"] = amount * 100;
     vnp_Params["vnp_ReturnUrl"] = returnUrl;
