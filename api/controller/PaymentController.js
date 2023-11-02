@@ -24,6 +24,8 @@ class PaymentController {
     let orderId = moment(date).format("DDHHmmss");
     let amount = req.body.amount;
     let bankCode = req.body.bankCode;
+    let customerId = req.body.customerId;
+    let productId = req.body.productId;
 
     let locale = req.body.language;
     if (locale === null || locale === "") {
@@ -37,7 +39,9 @@ class PaymentController {
     vnp_Params["vnp_Locale"] = locale;
     vnp_Params["vnp_CurrCode"] = currCode;
     vnp_Params["vnp_TxnRef"] = orderId;
-    vnp_Params["vnp_OrderInfo"] = "Thanh toan cho ma GD:" + orderId;
+    vnp_Params[
+      "vnp_OrderInfo"
+    ] = `Thanh toan cho ma GD:${orderId}, customerId:${customerId}, productId:${productId}`;
     vnp_Params["vnp_OrderType"] = "other";
     vnp_Params["vnp_Amount"] = amount * 100;
     vnp_Params["vnp_ReturnUrl"] = returnUrl;
