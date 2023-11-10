@@ -52,7 +52,6 @@ class customerController {
         res.status(404).send("Không có dữ liệu");
       }
     } catch (err) {
-      console.log(err);
       res.status(500).send("Lỗi server");
     }
   }
@@ -81,11 +80,11 @@ class customerController {
         { $set: req.body }
       ).exec();
       if (update) {
-        return res.status(200).json({
+        res.status(200).json({
           message: "Cập nhật thông tin khách hàng thành công",
         });
       } else {
-        return res.status(404).json({
+        res.status(404).json({
           message: "Không tìm thấy khách hàng để cập nhật",
         });
       }
@@ -128,9 +127,9 @@ class customerController {
     try {
       const data = await CustomerModel.deleteOne({ _id: req.params.id });
       if (data) {
-        return res.status(200).json("Xóa thông tin khách hàng thành công");
+        res.status(200).json("Xóa thông tin khách hàng thành công");
       } else {
-        return res.status(404).json("Không tìm thấy khách hàng để xóa");
+        res.status(404).json("Không tìm thấy khách hàng để xóa");
       }
     } catch (err) {
       res.status(500).send("Lỗi server");

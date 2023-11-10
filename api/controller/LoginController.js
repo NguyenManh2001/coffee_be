@@ -9,7 +9,7 @@ class LoginController {
   //     .exec()
   //     .then((user) => {
   //       if (user.length < 1) {
-  //         return res.status(404).json({
+  //          res.status(404).json({
   //           message: "Auth faled",
   //         });
   //       } else {
@@ -18,7 +18,7 @@ class LoginController {
   //           user[0].password,
   //           function (err, result) {
   //             if (err) {
-  //               return res.status(404).json({
+  //                res.status(404).json({
   //                 message: "Auth faled",
   //               });
   //             }
@@ -35,12 +35,12 @@ class LoginController {
   //                   expiresIn: "1h",
   //                 }
   //               );
-  //               return res.status(200).json({
+  //                res.status(200).json({
   //                 message: "Đăng nhập thành công",
   //                 token: token,
   //               });
   //             }
-  //             return res.status(404).json({
+  //              res.status(404).json({
   //               message: "Auth faled",
   //             });
   //           }
@@ -59,7 +59,7 @@ class LoginController {
       const user = await AccountModel.findOne({ email: req.body.email }).exec();
 
       if (!user) {
-        return res.status(404).json({
+        res.status(404).json({
           message: "Authentication failed",
         });
       }
@@ -85,12 +85,12 @@ class LoginController {
               }
             );
 
-            return res.status(200).json({
+            res.status(200).json({
               message: "Đăng nhập thành công",
               token: token,
             });
           } else {
-            return res.status(404).json({
+            res.status(404).json({
               message: "Authentication failed",
             });
           }
@@ -154,11 +154,11 @@ class LoginController {
         { $set: req.body }
       ).exec();
       if (update) {
-        return res.status(200).json({
+        res.status(200).json({
           message: "Cập nhật tài khoản thành công",
         });
       } else {
-        return res.status(404).json({
+        res.status(404).json({
           message: "Không tìm thấy tài khoản để cập nhật",
         });
       }
@@ -172,9 +172,9 @@ class LoginController {
     try {
       const data = await AccountModel.deleteOne({ _id: req.params.id });
       if (data) {
-        return res.status(200).json("Xóa tài khoản thành công");
+        res.status(200).json("Xóa tài khoản thành công");
       } else {
-        return res.status(404).json("Không tìm thấy tài khoản để xóa");
+        res.status(404).json("Không tìm thấy tài khoản để xóa");
       }
     } catch (err) {
       console.log(err);

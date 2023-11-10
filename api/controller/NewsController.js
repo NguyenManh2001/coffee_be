@@ -50,7 +50,7 @@ class NewsController {
 
       const result = await news.save();
 
-      res.status(201).json({
+      res.status(200).json({
         message: "Thêm tin tức thành công",
         menu: result,
       });
@@ -103,6 +103,9 @@ class NewsController {
       const id = req.params.newsId;
       const result = await NewsModel.deleteOne({ _id: id }).exec();
       if (result.deletedCount > 0) {
+        if (req.file) {
+          await cloudinary.uploader.destroy(req.file.filename);
+        }
         res.status(200).json({
           message: "Xóa tin tức thành công",
         });

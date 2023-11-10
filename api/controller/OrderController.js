@@ -8,11 +8,6 @@ class OrderController {
   async addOrder(req, res, next) {
     const customer = req.body.customerId;
     const product = req.body.productId;
-    // const quantity = req.body.quantity;
-    // const name = req.body.name;
-    // const link = req.body.link;
-    // const price = req.body.price;
-    // const size = req.body.size;
     const total = req.body.total;
     const isPaid = req.body.isPaid;
 
@@ -20,32 +15,21 @@ class OrderController {
       _id: new mongoose.Types.ObjectId(),
       customer: customer,
       products: product,
-      // items: [
-      //   {
-      //     productId: productId,
-      //     name: name,
-      //     price: price,
-      //     link: link,
-      //     quantity: quantity,
-      //     size: size,
-      //   },
-      // ],
       total: total,
       isPaid: isPaid,
     });
-    console.log(ordersModel);
     try {
       const data = await ordersModel.save();
       if (data) {
-        res.status(201).json({
+        res.status(200).json({
           message: "Thêm đơn hàng thành công",
           menu: data,
         });
       } else {
-        res.json("that bai");
+        res.status(404).send("Thêm thông tin thất bại");
       }
     } catch (err) {
-      res.status(500).json("loi sever");
+      res.status(500).json("Lỗi sever");
     }
   }
 
@@ -68,14 +52,12 @@ class OrderController {
         populate: ["customer", "products.product"], // Populate customerId and items.productId
       };
       const data = await OrderModel.paginate(query, options);
-      // const data = await OrderModel.find({});
       if (data) {
-        res.send(data);
+        res.status(200).send(data);
       } else {
-        console.log("Không có dữ liệu");
+        res.status(404).send("Không có dữ liệu");
       }
     } catch (err) {
-      console.log(err);
       res.status(500).send("Lỗi server");
     }
   }
@@ -128,30 +110,14 @@ class OrderController {
     try {
       const data = await OrderModel.deleteOne({ _id: req.params.id });
       if (data) {
-        res.json("Xóa đơn hàng thành công");
+        res.status(200).json("Xóa đơn hàng thành công");
       } else {
-        console.log("Không có dữ liệu");
+        res.status(404).json("Không tìm thấy đơn hàng để xóa");
       }
     } catch (err) {
-      console.log(err);
       res.status(500).send("Lỗi server");
     }
-    // next();
   }
-  //   async searchCar(req,res,next){
-  //     try{
-  //        const data = await CreatecarModel.find({name: req.body.searchValue})
-  //        if(data){
-  //         res.send(data);
-  //        }else{
-  //         console.log('Không có dữ liệu');
-  //        }
-  //     }catch(err){
-  //       console.log(err);
-  //       res.status(500).send('Lỗi server');
-  //     }
-  //      next();
-  //   }
 }
 
 module.exports = new OrderController();
