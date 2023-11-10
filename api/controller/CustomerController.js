@@ -22,9 +22,9 @@ class customerController {
     try {
       const data = await customersModel.save();
       if (data) {
-        res.json("Thêm thông tin thành công!");
+        res.status(200).json("Thêm thông tin thành công!");
       } else {
-        res.json("that bai");
+        res.status(404).send("Thêm thông tin thất bại");
       }
     } catch (err) {
       res.status(500).json("loi sever");
@@ -47,9 +47,9 @@ class customerController {
       const data = await CustomerModel.paginate(query, { page, limit });
       // const data = await CustomerModel.find({});
       if (data) {
-        res.send(data);
+        res.status(200).send(data);
       } else {
-        console.log("Không có dữ liệu");
+        res.status(404).send("Không có dữ liệu");
       }
     } catch (err) {
       console.log(err);
@@ -57,20 +57,43 @@ class customerController {
     }
   }
 
+  // async updateCustomer(req, res, next) {
+  //   const id = req.params.id;
+  //   CustomerModel.updateOne({ _id: id }, { $set: req.body })
+  //     .exec()
+  //     .then((result) => {
+  //       res.status(200).json({
+  //         message: "Cập nhật thông tin khách hàng thành công",
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       res.status(500).json({
+  //         error: err,
+  //       });
+  //     });
+  // }
+
   async updateCustomer(req, res, next) {
     const id = req.params.id;
-    CustomerModel.updateOne({ _id: id }, { $set: req.body })
-      .exec()
-      .then((result) => {
-        res.status(200).json({
+    try {
+      const update = await CustomerModel.updateOne(
+        { _id: id },
+        { $set: req.body }
+      ).exec();
+      if (update) {
+        return res.status(200).json({
           message: "Cập nhật thông tin khách hàng thành công",
         });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          error: err,
+      } else {
+        return res.status(404).json({
+          message: "Không tìm thấy khách hàng để cập nhật",
         });
+      }
+    } catch (err) {
+      res.status(500).json({
+        error: err,
       });
+    }
   }
   //   async EditCar(req,res,next){
   //     try {
@@ -105,12 +128,11 @@ class customerController {
     try {
       const data = await CustomerModel.deleteOne({ _id: req.params.id });
       if (data) {
-        res.json("Xóa thông tin khách hàng thành công");
+        return res.status(200).json("Xóa thông tin khách hàng thành công");
       } else {
-        console.log("Không có dữ liệu");
+        return res.status(404).json("Không tìm thấy khách hàng để xóa");
       }
     } catch (err) {
-      console.log(err);
       res.status(500).send("Lỗi server");
     }
     next();
