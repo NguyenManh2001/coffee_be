@@ -4,71 +4,62 @@ const cloudinary = require("cloudinary").v2;
 const { default: mongoose } = require("mongoose");
 class NewsController {
   async listNews(req, res, next) {
-    const page = req.body.page || 1;
-    const limit = 7;
-    const search = req.body.search || "";
-    const type = req.body.type || "";
-    const query = {};
-    if (search) {
-      query.title = { $regex: new RegExp(search, "i") };
-    }
-    if (type) {
-      query.type = type;
-    }
-    NewsModel.paginate(query, { page, limit })
-      .then((results) => {
-        // const respone = {
-        //   count: results?.docs?.length,
-        //   products: results?.docs?.map((doc) => {
-        //     return {
-        //       _id: doc._id,
-        //       name: doc.name,
-        //       price: doc.price,
-        //       type: doc.type,
-        //       link: doc.link,
-        //       createdAt: doc.createdAt,
-        //     };
-        //   }),
-        // };
-        if (results) {
-          res.status(200).json(results);
-        } else {
-          res.status(404).json({
-            message: "No enties found",
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(500).json({
-          error: err,
+    try {
+      const page = req.body.page || 1;
+      const limit = 7;
+      const search = req.body.search || "";
+      const type = req.body.type || "";
+      const query = {};
+
+      if (search) {
+        query.title = { $regex: new RegExp(search, "i") };
+      }
+
+      if (type) {
+        query.type = type;
+      }
+
+      const results = await NewsModel.paginate(query, { page, limit });
+
+      if (results.docs.length > 0) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).json({
+          message: "No entries found",
         });
+      }
+    } catch (err) {
+      res.status(500).json({
+        error: err.message,
       });
+    }
   }
   async addNews(req, res, next) {
-    const title = req.body.title;
-    const describe = req.body.describe;
-    const image = req.file;
-    const type = req.body.type;
-    console.log(image);
-    const news = new NewsModel({
-      _id: new mongoose.Types.ObjectId(),
-      title: title,
-      describe: describe,
-      image: image?.path,
-      type: type,
-    });
-    news
-      .save()
-      .then((result) => {
-        res.status(201).json({
-          message: "Thêm tin tức thành công",
-          menu: result,
-        });
-      })
-      .catch((err) => {
-        if (image) cloudinary.uploader.destroy(image.filename);
-        res.status(500).json({ error: err });
+    try {
+      const title = req.body.title;
+      const describe = req.body.describe;
+      const image = req.file;
+      const type = req.body.type;
+      const news = new NewsModel({
+        _id: new mongoose.Types.ObjectId(),
+        title: title,
+        describe: describe,
+        image: image?.path,
+        type: type,
       });
+
+      const result = await news.save();
+
+      res.status(201).json({
+        message: "Thêm tin tức thành công",
+        menu: result,
+      });
+    } catch (err) {
+      if (req.file) {
+        await cloudinary.uploader.destroy(req.file.filename);
+      }
+      res.status(500).json({ error: err.message });
+    }
   }
 
   async updateNews(req, res, next) {
@@ -97,11 +88,10 @@ class NewsController {
         });
       } else {
         res.status(404).json({
-          message: "News not found or no changes were made.",
+          message: "Không tìm thấy tin tức để cập nhật",
         });
       }
     } catch (err) {
-      console.error(err);
       res.status(500).json({
         error: err.message,
       });
@@ -109,20 +99,23 @@ class NewsController {
   }
 
   async deleteNews(req, res, next) {
-    const id = req.params.newsId;
-    console.log(id);
-    NewsModel.deleteOne({ _id: id })
-      .exec()
-      .then((doc) => {
+    try {
+      const id = req.params.newsId;
+      const result = await NewsModel.deleteOne({ _id: id }).exec();
+      if (result.deletedCount > 0) {
         res.status(200).json({
           message: "Xóa tin tức thành công",
         });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          error: err,
+      } else {
+        res.status(404).json({
+          message: "Không tìm thấy tin tức để xóa",
         });
+      }
+    } catch (err) {
+      res.status(500).json({
+        error: err.message,
       });
+    }
   }
 }
 
