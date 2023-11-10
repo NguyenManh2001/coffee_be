@@ -21,7 +21,7 @@ class ProductController {
 
       const results = await ProductModel.paginate(query, { page, limit });
 
-      if (results.docs.length > 0) {
+      if (results) {
         // const response = {
         //   count: results.docs.length,
         //   products: results.docs.map((doc) => ({
@@ -34,7 +34,7 @@ class ProductController {
         //   })),
         // };
 
-        res.status(200).json(response);
+        res.status(200).json(results);
       } else {
         res.status(404).send("Không có dữ liệu");
       }
