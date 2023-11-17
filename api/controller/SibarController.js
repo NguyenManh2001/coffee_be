@@ -65,8 +65,8 @@ class SibarController {
     const name = req.body.name;
     const title = req.body.title;
     const btnName = req.body.btnName;
-    const image1 = req.files["srcImage"][0];
-    const image2 = req.files["iconImage"][0];
+    const image1 = req.files["srcImage"];
+    const image2 = req.files["iconImage"];
     console.log(image1);
     const id = req.params.id;
     console.log(id);
