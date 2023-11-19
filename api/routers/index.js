@@ -6,6 +6,7 @@ const orders = require("./orders");
 const payment = require("./payment");
 const abouts = require("./about");
 const sibar = require("./sibar");
+const menu = require("./menu");
 function route(app) {
   app.use("/product", product);
   app.use("/customer", customer);
@@ -15,6 +16,7 @@ function route(app) {
   app.use("/orders", orders);
   app.use("/sibar", sibar);
   app.use("/payment", payment);
+  app.use("/menu", menu);
   app.use((req, res, next) => {
     const error = new Error("Not found");
     error.status = 404;
