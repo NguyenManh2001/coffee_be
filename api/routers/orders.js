@@ -6,9 +6,11 @@ const {
   deleteOrder,
   // updateOrder,
   addOrder,
+  listAllOrders,
 } = require("../controller/OrderController");
 
 router.post("/listOrder", listOrder);
+router.post("/listAllOrders", listAllOrders);
 router.post("/addOrder", addOrder);
 router.delete("/deleteOrder/:id", deleteOrder);
 module.exports = router;

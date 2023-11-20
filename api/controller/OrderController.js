@@ -62,6 +62,33 @@ class OrderController {
     }
   }
 
+  async listAllOrders(req, res, next) {
+    try {
+      const search = req.body.search || "";
+      const email = req.body.email || "";
+
+      const query = {};
+      if (search) {
+        query.name = { $regex: new RegExp(search, "i") };
+      }
+      if (email) {
+        query.email = email;
+      }
+
+      const orders = await OrderModel.find(query).populate(
+        "customer products.product"
+      );
+
+      if (orders.length > 0) {
+        res.status(200).send(orders);
+      } else {
+        res.status(404).send("Không có dữ liệu");
+      }
+    } catch (err) {
+      res.status(500).send("Lỗi server");
+    }
+  }
+
   // async updateOrder(req, res, next) {
   //   const id = req.params.id;
   //   OrderModel.updateOne({ _id: id }, { $set: req.body })
