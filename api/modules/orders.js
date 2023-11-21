@@ -18,6 +18,7 @@ const ordersSchema = mongoose.Schema(
           required: true,
         },
         quantity: { type: Number, required: true },
+        notes: { type: String },
         size: { type: String, required: true },
       },
     ],
