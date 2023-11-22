@@ -14,7 +14,11 @@ class MenuController {
         query.name = { $regex: new RegExp(search, "i") };
       }
 
-      const results = await MenuModel.paginate(query, { page, limit });
+      const results = await MenuModel.paginate(query, {
+        page,
+        limit,
+        sort: { createdAt: -1 },
+      });
 
       if (results.docs.length > 0) {
         res.status(200).json(results);

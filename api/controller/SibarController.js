@@ -14,7 +14,11 @@ class SibarController {
         query.title = { $regex: new RegExp(search, "i") };
       }
 
-      const results = await SibarModel.paginate(query, { page, limit });
+      const results = await SibarModel.paginate(query, {
+        page,
+        limit,
+        sort: { createdAt: -1 },
+      });
 
       if (results.docs.length > 0) {
         res.status(200).json(results);

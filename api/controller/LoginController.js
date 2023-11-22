@@ -117,7 +117,11 @@ class LoginController {
       // if (email) {
       //   query.email = email;
       // }
-      const data = await AccountModel.paginate(query, { page, limit });
+      const data = await AccountModel.paginate(query, {
+        page,
+        limit,
+        sort: { createdAt: -1 },
+      });
       // const data = await CustomerModel.find({});
       if (data) {
         res.status(200).send(data);

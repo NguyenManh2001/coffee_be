@@ -14,7 +14,11 @@ class AboutsController {
         query.title = { $regex: new RegExp(search, "i") };
       }
 
-      const results = await AboutsModel.paginate(query, { page, limit });
+      const results = await AboutsModel.paginate(query, {
+        page,
+        limit,
+        sort: { createdAt: -1 },
+      });
 
       if (results.docs.length > 0) {
         res.status(200).json(results);

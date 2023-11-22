@@ -49,6 +49,7 @@ class OrderController {
       const options = {
         page: page,
         limit: limit,
+        sort: { createdAt: -1 },
         populate: ["customer", "products.product"], // Populate customerId and items.productId
       };
       const data = await OrderModel.paginate(query, options);
