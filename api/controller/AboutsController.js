@@ -11,7 +11,7 @@ class AboutsController {
       const query = {};
 
       if (search) {
-        query.title = { $regex: new RegExp(search, "i") };
+        query.name = { $regex: new RegExp(search, "i") };
       }
 
       const results = await AboutsModel.paginate(query, {
