@@ -19,7 +19,11 @@ class ProductController {
         query.type = type;
       }
 
-      const results = await ProductModel.paginate(query, { page, limit });
+      const results = await ProductModel.paginate(query, {
+        page,
+        limit,
+        sort: { createdAt: -1 },
+      });
 
       if (results) {
         // const response = {
