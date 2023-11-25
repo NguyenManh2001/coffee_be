@@ -37,22 +37,28 @@ class OrderController {
     const page = req.body.page || 1;
     const limit = req.body.select || 10;
     const search = req.body.search || "";
-    const email = req.body.email || "";
+    // const email = req.body.email || "";
     try {
-      const query = {};
-      if (search) {
-        query.name = { $regex: new RegExp(search, "i") };
-      }
-      if (email) {
-        query.email = email;
-      }
+      // const query = {};
+      // if (search) {
+      //   query.name = { $regex: new RegExp(search, "i") };
+      // }
+      // if (email) {
+      //   query.email = email;
+      // }
       const options = {
         page: page,
         limit: limit,
         sort: { createdAt: -1 },
-        populate: ["customer", "products.product"], // Populate customerId and items.productId
+        populate: [
+          {
+            path: "customer",
+            match: { name: { $regex: new RegExp(search, "i") } },
+          },
+          "products.product",
+        ],
       };
-      const data = await OrderModel.paginate(query, options);
+      const data = await OrderModel.paginate({}, options);
       if (data) {
         res.status(200).send(data);
       } else {
