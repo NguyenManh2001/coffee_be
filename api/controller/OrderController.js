@@ -84,12 +84,12 @@ class OrderController {
 
   async listAllOrders(req, res, next) {
     try {
-      const search = req.body.search || "";
+      const user = req.body.user || "";
       const email = req.body.email || "";
 
       const query = {};
-      if (search) {
-        query.customer = search;
+      if (user) {
+        query.customer = user;
       }
       if (email) {
         query.email = email;
