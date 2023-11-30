@@ -63,9 +63,9 @@ class OrderController {
         limit: limit,
         sort: { createdAt: -1 },
         populate: [
-          // {
-          //   path: "customer",
-          // },
+          {
+            path: "customer",
+          },
           {
             path: "products.product",
           },
