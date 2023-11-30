@@ -37,14 +37,17 @@ class OrderController {
     const page = req.body.page || 1;
     const limit = req.body.select || 10;
     const search = req.body.search || "";
+
     const startDate = req.body.formattedDates?.startDate;
     const endDate = req.body.formattedDates?.endDate; //
     // const email = req.body.email || "";
     try {
       const query = {};
-      if (search) {
-        query.name = { $regex: new RegExp(search, "i") };
-      }
+      // if (search) {
+      //   query.customer = { $regex: new RegExp(search, "i") };
+      // }
+      // console.log(query);
+      // console.log(search);
       if (startDate && endDate) {
         query.createdAt = {
           $gte: new Date(startDate), // Tìm các bản ghi lớn hơn hoặc bằng startDate
@@ -60,9 +63,9 @@ class OrderController {
         limit: limit,
         sort: { createdAt: -1 },
         populate: [
-          {
-            path: "customer",
-          },
+          // {
+          //   path: "customer",
+          // },
           {
             path: "products.product",
           },
@@ -86,15 +89,13 @@ class OrderController {
 
       const query = {};
       if (search) {
-        query.name = { $regex: new RegExp(search, "i") };
+        query.customer = search;
       }
       if (email) {
         query.email = email;
       }
 
-      const orders = await OrderModel.find(query).populate(
-        "customer products.product"
-      );
+      const orders = await OrderModel.find(query).populate("products.product");
 
       if (orders.length > 0) {
         res.status(200).send(orders);
