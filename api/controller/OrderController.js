@@ -95,7 +95,9 @@ class OrderController {
         query.email = email;
       }
 
-      const orders = await OrderModel.find(query).populate("products.product");
+      const orders = await OrderModel.find(query)
+        .sort({ createdAt: -1 })
+        .populate("products.product");
 
       if (orders.length > 0) {
         res.status(200).send(orders);
