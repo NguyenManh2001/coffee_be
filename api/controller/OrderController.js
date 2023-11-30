@@ -84,7 +84,7 @@ class OrderController {
 
   async listAllOrders(req, res, next) {
     try {
-      const users = req.body.user || "";
+      const users = req.body.users || "";
       const email = req.body.email || "";
 
       const query = {};
