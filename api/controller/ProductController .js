@@ -51,6 +51,7 @@ class ProductController {
   async addProduct(req, res, next) {
     try {
       const { type, name, price } = req.body;
+      const discounted = req.body.discounted || 0;
       const image = req.file;
       const product = new ProductModel({
         _id: new mongoose.Types.ObjectId(),
@@ -58,6 +59,7 @@ class ProductController {
         price: price,
         link: image?.path,
         type: type,
+        discounted: discounted,
       });
 
       const result = await product.save();
@@ -81,11 +83,13 @@ class ProductController {
     const name = req.body.name;
     const price = req.body.price;
     const image = req.file;
+    const discounted = req.body.discounted;
     const productId = req.params.id;
     const updatedFields = {
       name: name,
       price: price,
       type: type,
+      discounted: discounted,
       link: image ? image.path : req.link,
     };
 

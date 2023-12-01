@@ -18,6 +18,7 @@ const product = new Schema(
     name: { type: String, required: true },
     price: { type: Number, required: true },
     link: { type: String, required: true },
+    discounted: { type: Number },
     // createdAt: { type: Date, default: Date.now },
     // updatedAt: { type: Date, default: Date.now },
     type: { type: String, required: true },
