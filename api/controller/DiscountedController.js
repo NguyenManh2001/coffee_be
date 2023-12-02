@@ -13,7 +13,7 @@ class DiscountedController {
       const query = {};
 
       if (search) {
-        query.title = { $regex: new RegExp(search, "i") };
+        query.name = { $regex: new RegExp(search, "i") };
       }
 
       if (type) {
