@@ -41,7 +41,6 @@ class DiscountedController {
   }
   async addDiscounted(req, res, next) {
     try {
-      console.log(req.body.name);
       const name = req.body.name;
       const startDate = req.body.startDate;
       const endDate = req.body.endDate;
