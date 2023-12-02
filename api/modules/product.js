@@ -19,8 +19,7 @@ const product = new Schema(
     price: { type: Number, required: true },
     link: { type: String, required: true },
     discounted: { type: Number },
-    // createdAt: { type: Date, default: Date.now },
-    // updatedAt: { type: Date, default: Date.now },
+    discounts: [{ type: mongoose.Schema.Types.ObjectId, ref: "discounted" }],
     type: { type: String, required: true },
   },
   {

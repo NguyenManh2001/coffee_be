@@ -23,6 +23,9 @@ class ProductController {
         page,
         limit,
         sort: { createdAt: -1 },
+        populate: {
+          path: "discounts", // Định tên của field trong ProductModel để populate
+        },
       });
 
       if (results) {
