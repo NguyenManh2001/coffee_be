@@ -21,7 +21,7 @@ const ordersSchema = mongoose.Schema(
         size: { type: String, required: true },
         ice: { type: Number, required: true },
         sugar: { type: Number, required: true },
-        topping: { type: String, required: true },
+        toppings: { type: String, required: true },
       },
     ],
     // items: [
