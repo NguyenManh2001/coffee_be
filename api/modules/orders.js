@@ -18,8 +18,10 @@ const ordersSchema = mongoose.Schema(
           required: true,
         },
         quantity: { type: Number, required: true },
-        notes: { type: String },
         size: { type: String, required: true },
+        ice: { type: Number, required: true },
+        sugar: { type: Number, required: true },
+        topping: { type: String, required: true },
       },
     ],
     // items: [
