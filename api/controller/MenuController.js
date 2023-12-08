@@ -6,7 +6,7 @@ class MenuController {
   async listMenu(req, res, next) {
     try {
       const page = req.body.page || 1;
-      const limit = 7;
+      const limit = req.body.limit || 7;
       const search = req.body.search || "";
       const query = {};
 
