@@ -7,6 +7,7 @@ const discounted = new Schema(
   {
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true },
+    product: { type: String, required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     discounted: { type: Number, required: true },

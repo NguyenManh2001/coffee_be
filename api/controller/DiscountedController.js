@@ -42,12 +42,14 @@ class DiscountedController {
   async addDiscounted(req, res, next) {
     try {
       const name = req.body.name;
+      const product = req.body.product;
       const startDate = req.body.startDate;
       const endDate = req.body.endDate;
       const discounted = req.body.discounted;
       const discount = new DiscountedModel({
         _id: new mongoose.Types.ObjectId(),
         name: name,
+        product: product,
         startDate: startDate,
         endDate: endDate,
         discounted: discounted,
@@ -82,12 +84,14 @@ class DiscountedController {
 
   async updateDiscounted(req, res, next) {
     const name = req.body.name;
+    const product = req.body.product;
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
     const discounted = req.body.discounted;
     const discountedId = req.params.discountedId;
     const updatedFields = {
       name: name,
+      product: product,
       startDate: startDate,
       endDate: endDate,
       discounted: discounted,
