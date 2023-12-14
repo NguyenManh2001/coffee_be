@@ -8,6 +8,7 @@ class OrderController {
   async addOrder(req, res, next) {
     const customer = req.body.customerId;
     const product = req.body.productId;
+    const address = req.body.address;
     const total = req.body.total;
     const isPaid = req.body.isPaid;
 
@@ -15,6 +16,7 @@ class OrderController {
       _id: new mongoose.Types.ObjectId(),
       customer: customer,
       products: product,
+      address: address,
       total: total,
       isPaid: isPaid,
     });

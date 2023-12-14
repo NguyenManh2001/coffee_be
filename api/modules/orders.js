@@ -37,6 +37,7 @@ const ordersSchema = mongoose.Schema(
     //     size: String,
     //   },
     // ],
+    address: { type: String },
     total: Number,
     isPaid: Boolean,
   },
