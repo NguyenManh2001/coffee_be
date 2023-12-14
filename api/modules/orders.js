@@ -24,19 +24,6 @@ const ordersSchema = mongoose.Schema(
         toppings: [{ type: String, required: true }],
       },
     ],
-    // items: [
-    //   {
-    //     productId: {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       required: true,
-    //     },
-    //     name: { type: String, required: true },
-    //     link: { type: String, required: true },
-    //     price: { type: Number, required: true },
-    //     quantity: { type: Number, default: 1 },
-    //     size: String,
-    //   },
-    // ],
     address: { type: String },
     total: Number,
     isPaid: Boolean,
