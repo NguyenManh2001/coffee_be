@@ -9,6 +9,7 @@ const customer = new Schema(
     name: { type: String, required: true },
     gender: { type: String, required: true },
     address: { type: String, required: true },
+    temporaryAddress: { type: String },
     email: { type: String, required: true },
     number: { type: String, required: true },
   },
