@@ -25,7 +25,7 @@ class PaymentController {
     let bankCode = req.body.bankCode;
     let customerId = req.body.customerId;
     let productId = req.body.productId;
-
+    let address = req.body.address;
     let locale = req.body.language;
     if (locale === null || locale === "") {
       locale = "vn";
@@ -42,6 +42,7 @@ class PaymentController {
       orderId: orderId,
       customerId: customerId,
       productId: productId,
+      address: address,
     });
 
     vnp_Params["vnp_OrderType"] = "other";
