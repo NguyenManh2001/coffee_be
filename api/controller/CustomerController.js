@@ -8,7 +8,7 @@ class customerController {
     const name = req.body.name;
     const gender = req.body.gender;
     const address = req.body.address;
-    const temporaryAddress = "";
+    // const temporaryAddress = "";
     const email = req.body.email;
     const number = req.body.number;
 
