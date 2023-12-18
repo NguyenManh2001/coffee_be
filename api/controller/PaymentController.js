@@ -24,7 +24,7 @@ class PaymentController {
     let amount = req.body.amount;
     let bankCode = req.body.bankCode;
     let customerId = req.body.customerId;
-    let productId = req.body.productId;
+    // let productId = req.body.productId;
     let address = req.body.address;
     let locale = req.body.language;
     if (locale === null || locale === "") {
@@ -41,7 +41,7 @@ class PaymentController {
     vnp_Params["vnp_OrderInfo"] = JSON.stringify({
       orderId: orderId,
       customerId: customerId,
-      productId: productId,
+      // productId: productId,
       address: address,
     });
 
