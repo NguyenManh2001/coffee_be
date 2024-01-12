@@ -7,6 +7,7 @@ const topping = new Schema(
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true },
     type: { type: String, required: true },
+    price: { type: Number, required: true },
   },
   {
     collection: "topping",
