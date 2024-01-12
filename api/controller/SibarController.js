@@ -42,6 +42,7 @@ class SibarController {
       const image2 = req.files["iconImage"][0];
       const imagePath1 = image1?.path;
       const imagePath2 = image2?.path;
+      const linkVideo = req.body.linkVideo;
       const sibar = new SibarModel({
         _id: new mongoose.Types.ObjectId(),
         name: name,
@@ -49,6 +50,7 @@ class SibarController {
         btnName: btnName,
         srcImage: imagePath1,
         iconImage: imagePath2,
+        linkVideo: linkVideo,
       });
 
       const result = await sibar.save();
@@ -71,6 +73,7 @@ class SibarController {
     const btnName = req.body.btnName;
     const image1 = req.files["srcImage"];
     const image2 = req.files["iconImage"];
+    const linkVideo = req.body.linkVideo;
     console.log(image1);
     const id = req.params.id;
     console.log(id);
@@ -81,6 +84,7 @@ class SibarController {
       srcImage: image1 ? image1?.path : req.srcImage,
       iconImage: image2 ? image2?.path : req.iconImage,
       // image: image ? image.path : req.link,
+      linkVideo: linkVideo,
     };
 
     try {

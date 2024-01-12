@@ -11,6 +11,7 @@ const sibar = new Schema(
     srcImage: { type: String, required: true },
     iconImage: { type: String, required: true },
     btnName: { type: String, required: true },
+    linkVideo: { type: String },
   },
   {
     collection: "sibar",
