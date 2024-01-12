@@ -8,6 +8,7 @@ const abouts = require("./about");
 const sibar = require("./sibar");
 const menu = require("./menu");
 const topping = require("./topping");
+const ingredient = require("./ingredient");
 const discounted = require("./discounted");
 function route(app) {
   app.use("/product", product);
@@ -20,6 +21,7 @@ function route(app) {
   app.use("/payment", payment);
   app.use("/menu", menu);
   app.use("/topping", topping);
+  app.use("/ingredient", ingredient);
   app.use("/discounted", discounted);
   app.use((req, res, next) => {
     const error = new Error("Not found");
