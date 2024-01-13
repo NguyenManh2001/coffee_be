@@ -6,6 +6,7 @@ const ingredient = new Schema(
   {
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true },
+    quantity: { type: String, required: true },
     supplier: { type: String, required: true },
     price: { type: Number, required: true },
     email: { type: String, required: true },

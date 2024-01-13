@@ -41,6 +41,7 @@ class IngredientController {
       const email = req.body.email;
       const number = req.body.number;
       const address = req.body.address;
+      const quantity = req.body.quantity;
       const menu = new IngredientModel({
         _id: new mongoose.Types.ObjectId(),
         name: name,
@@ -49,6 +50,7 @@ class IngredientController {
         email: email,
         number: number,
         address: address,
+        quantity: quantity,
       });
 
       const result = await menu.save();
@@ -69,6 +71,7 @@ class IngredientController {
     const email = req.body.email;
     const number = req.body.number;
     const address = req.body.address;
+    const quantity = req.body.quantity;
     const id = req.params.id;
     const updatedFields = {
       name: name,
@@ -77,6 +80,7 @@ class IngredientController {
       email: email,
       number: number,
       address: address,
+      quantity: quantity,
     };
 
     try {
